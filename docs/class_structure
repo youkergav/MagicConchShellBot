@@ -1,0 +1,37 @@
+Controller()
+    <function>start
+    <function>stop
+    <function>restart
+    <function>watch
+    <function>status
+    MagicConchShell()
+        <function>loadConfig(<string>filePath)
+        <function>logEvent(<string>filePath)
+        <function>normalizeKarmas()
+        <function>stringPull()
+        <function>buildResponse()
+        <object>RedditApi(<string>redirectUrl, <string>authCode, <string>username, <string>password)
+            <object>ApiOauth(<string>apiUrl, <string:optional>getParams[], <string:optional>postParams[], <string:optional>headers[])
+            <function>getComments(<string>subreddit, <string:optional>commentCount)
+                <object>ApiCalls(<string>apiUrl, <string:optional>getParams[], <string:optional>postParams[], <string:optional>headers[])
+            <function>postComment(<string>commentId, <string>commentText)
+                <object>ApiCalls(<string>apiUrl, <string:optional>getParams[], <string:optional>postParams[], <string:optional>headers[])
+            <function>getKarma(<string>userId)
+                <object>ApiCalls(<string>apiUrl, <string:optional>getParams[], <string:optional>postParams[], <string:optional>headers[])
+
+* Authentication
+    * Token retrieval
+    * Token refreshing
+* API Integration
+    * Querying Subreddit comments
+    * Posting comments
+    * Checking user Karma
+* Conch shell responses
+* Controls
+    * Start
+    * Stop
+    * Restart
+    * Watch
+    * Status
+* Logging
+* Reading config file
