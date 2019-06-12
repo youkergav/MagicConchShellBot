@@ -1,9 +1,34 @@
-Param ($Command) # Define command parameter.
-If(!$Command) {$Command = ""}
+# Author:   Nate Perkins, Gavin Youker
+# Date:     2019-05-29
+# Desc:     Multi-threaded PowerShell script to query Reddit's
+#           REST API. The script has two main lambda functions:
+#           GetToken - which retrieves and updates sessions based
+#           on OAUTH, and QueryAPI - which scans Reddit comments for
+#           the trigger string and sends automated conch responses.
+# Info:     The Magic Conch Shell Bot is a lavender-colored seashell, 
+#           and has a speaker inside it to help the toy and users 
+#           communicate more effectively. It is operated by a pull-
+#           string on Reddit.
+# Links:    https://www.reddit.com/dev/api
+#           https://github.com/reddit-archive/reddit/wiki/OAuth2
+#           https://github.com/youkergav/MagicConchShellBot
+
+
+Param ($Arg) # Define command parameter.
+If(!$Arg) {$Arg = ""}
+
 
 # Perform OAUTH authentication for Reddit API.
 $GetToken = {
     Param($RUNPATH) # Set the path where the script was ran.
+
+
+    Function EchoLog {
+        param($Output) # Set the output parameter.
+    
+        echo $Output
+        "$(Get-Date -UFormat '%Y-%m-%d %H:%M:%S')`t$Output" | Out-File -FilePath "$RUNPATH\log.txt" -Append
+    }
 
     # Function to return the time in seconds.
     Function GetTimeSeconds {
@@ -11,12 +36,7 @@ $GetToken = {
     }
 
     # Function to echo output and write it to the log.
-    Function WriteLog {
-        param($Output) # Set the output parameter.
-
-        echo $Output
-        "$(Get-Date -UFormat '%Y-%m-%d %H:%M:%S')`t$Output" | Out-File -FilePath "$RUNPATH\log.txt" -Append
-    }
+    
 
     $Config = Get-Content -Raw -Path "$RUNPATH\config.json" | ConvertFrom-Json  # Read from the config file.
 
@@ -34,16 +54,18 @@ $GetToken = {
     }
 
     # Get the token.
-    WriteLog("Getting access token...")
+    EchoLog("Getting access token...")
     $Request = $(Invoke-WebRequest -Uri "https://www.reddit.com/api/v1/access_token" -Method "POST" -Body $PostParams -Headers $Headers).Content | ConvertFrom-Json
     $Auth = @{
         "AccessToken" = $Request.access_token
         "RefreshToken" = $Request.refresh_token
         "Expires" = $Request.expires_in
     }
+    
     $Config.AccessToken = $Auth.AccessToken
     $Config | ConvertTo-Json -Depth 4 > "$RUNPATH\config.json"
-
+    
+    # Guarantees use of refresh token on first loop if access token is expired
     $Timestamp = GetTimeSeconds
     If(!$Auth.Expires) {$Auth.Expires = 60 + 10}
     
@@ -58,7 +80,7 @@ $GetToken = {
             }
 
             # Refresh the token.
-            WriteLog("Token has expired. Refreshing access token...")
+            EchoLog("Token has expired. Refreshing access token...")
             $Request = $(Invoke-WebRequest -Uri "https://www.reddit.com/api/v1/access_token" -Method "POST" -Body $PostParams -Headers $Headers).Content | ConvertFrom-Json
             $Auth.AccessToken = $Request.access_token
             $Auth.Expires = $Request.expires_in
@@ -78,7 +100,7 @@ $QueryAPI = {
     Param($RUNPATH) # Set the path where the script was ran.
 
     # Function to echo output and write it to the log.
-    Function WriteLog {
+    Function EchoLog {
         param($Output) # Set the output parameter.
 
         echo $Output
@@ -105,7 +127,7 @@ $QueryAPI = {
                     [void]$IDs.Add($Comment.id) # Add element to the array
 
                     If($FirstRun -Eq 0) {
-                        WriteLog("New comment found! Replying...")
+                        EchoLog("New comment found! Replying...")
 
                         # Build the POST parameters.
                         $PostParams = @{
@@ -130,15 +152,15 @@ $QueryAPI = {
     }
 }
 
-# Run the main program.
-$JobGetToken = $(Get-Job -Name "GetToken" -EA SilentlyContinue)
-$JobQueryAPI = $(Get-Job -Name "QueryAPI" -EA SilentlyContinue)
+# Check program status
+$JobGetToken = $(Get-Job -Name "GetToken" -ErrorAction SilentlyContinue)
+$JobQueryAPI = $(Get-Job -Name "QueryAPI" -ErrorAction SilentlyContinue)
 
-Switch($Command.ToLower()) {
-    "start" {
+$Command = @{
+    "Start" = {
         # Check to make sure no jobs are currently running.
         If($JobGetToken -Or $JobQueryAPI) {
-            echo "Error. Script is already running, try stopping first."
+            echo "Error: Script is already running, try stopping first."
         } else {
             Out-File -FilePath "$PSScriptRoot\log.txt" # Create log file.
 
@@ -146,8 +168,8 @@ Switch($Command.ToLower()) {
             echo "Loading tokens..."
             Start-Job $GetToken -Name "GetToken" -Arg $PSScriptRoot > $Null
 
-            echo "Delaying for 30 seconds..."
-            Start-Sleep -s 30
+            echo "Delaying for 15 seconds..."
+            Start-Sleep -s 15
 
             # Start the QueryAPI script as a job.
             echo "Getting API calls...."
@@ -155,26 +177,27 @@ Switch($Command.ToLower()) {
 
             echo "`nDone. Script is running."
         }
-
-        Break
     }
-    "stop" {
-        If($JobGetToken -And $JobQueryAPI) {
+    "Stop" = {
+        If($JobGetToken) {
             # Stop the GetToken script
             Stop-Job -Name "GetToken"
             Remove-Job -Name "GetToken"
-
-            # Stop the GetToken script
+            echo "GetToken script has stopped."
+        }else {
+            echo "Error: GetToken script is not running."
+        }    
+        If($JobQueryAPI){
+            # Stop the JobQueryAPI script
             Stop-Job -Name "QueryAPI"
             Remove-Job -Name "QueryAPI"
-
-            echo "The script has stopped."
-        } else {
-            echo "Error: The script is not running."
+            echo "JobQueryAPI script has stopped."
+        }else {
+            echo "Error: JobQueryAPI script is not running."
         }
-        Break
+
     }
-    "watch" {
+    "Watch" = {
         If($($JobGetToken -And $JobQueryAPI) -And $($($JobGetToken.State -Eq "Running") -And $($JobQueryAPI.State -Eq "Running"))) {
             While(1) {
                 # Get the status for each job.
@@ -186,32 +209,27 @@ Switch($Command.ToLower()) {
         } else {
             echo "Error: Script is not running."
         }
+    }
+}
 
+
+Switch($Arg.ToLower()) {
+    "start" {
+        &$Command.Start
+        Break
+    }
+    "stop" {
+        &$Command.Stop
+        Break
+    }
+    "watch" {
+        &$Command.Watch
         Break
     }
     "restart" {
-        # Stop the GetToken script
-        Stop-Job -Name "GetToken" -EA SilentlyContinue
-        Remove-Job -Name "GetToken" -EA SilentlyContinue
-
-        # Stop the GetToken script
-        Stop-Job -Name "QueryAPI" -EA SilentlyContinue
-        Remove-Job -Name "QueryAPI" -EA SilentlyContinue
-
-        Out-File -FilePath "$PSScriptRoot\log.txt" # Create log file.
-
-        # Start the GetToken script as a job.
-        echo "Loading tokens..."
-        Start-Job $GetToken -Name "GetToken" -Arg $PSScriptRoot > $Null
-
-        echo "Delaying for 30 seconds..."
-        Start-Sleep -s 30
-
-        # Start the QueryAPI script as a job.
-        echo "Getting API calls...."
-        Start-Job $QueryAPI -Name "QueryAPI" -Arg $PSScriptRoot > $Null
-
-        echo "`nDone. The script has restarted."
+        &$Command.Stop
+        &$Command.Start
+        Break
     }
     default {
         echo "Invalid command. Commands:  start | watch | stop | restart"
