@@ -1,0 +1,30 @@
+MagicConchShell
+|--- app
+    |--- middlewares
+        |--- norm_karma.js
+        |--- build_reponse.js
+    |--- controllers
+        |--- commands.js
+        |--- stream.js
+        |--- oauth.js
+    |--- models
+        |--- config.js
+        |--- reddit.js
+        |--- log.js
+    |--- views
+        |--- screen.js
+    |--- app.js
+|--- config
+    |--- config.json
+    |--- config.sample.json
+|--- docs
+    |--- prototype
+        |--- MagicConchShell.ps1
+        |--- config.sample.json
+|--- logs
+|--- node_modules
+|--- tests
+|--- .gitignore
+|--- package.json
+|--- package-lock.json
+|--- LISCENSE

@@ -61,4 +61,4 @@ typings/
 .next
 
 # prototype project
-tests/prototype/config.json
+docs/prototype/config.json
