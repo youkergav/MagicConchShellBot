@@ -1,12 +1,12 @@
 MagicConchShell
 |--- app
+    |--- core
+        |--- oauth.js
     |--- middlewares
         |--- norm_karma.js
         |--- build_reponse.js
     |--- controllers
-        |--- commands.js
-        |--- stream.js
-        |--- oauth.js
+        |--- controller.js
     |--- models
         |--- config.js
         |--- reddit.js
