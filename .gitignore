@@ -62,4 +62,7 @@ typings/
 
 # Hide config files
 docs/prototype/config.json
-config/.env
+config/dev.env
+config/master.env
+config/sandbox.env
+config/test.env
