@@ -1,6 +1,6 @@
 // Import required modules.
-const path = require('path');
-const dotenv = require("dotenv")
+const path = require("path");
+const dotenv = require("dotenv");
 
 dotenv.config({ path: path.join(__dirname, ".env") }); // Load the environment variables.
 
@@ -9,7 +9,7 @@ const defaults = {
     server: {
         port: 5500
     }
-}
+};
 
 // Define all configurations.
 module.exports = {
@@ -21,4 +21,4 @@ module.exports = {
         username: process.env.API_USERNAME,
         password: process.env.API_PASSWORD
     }
-}
+};

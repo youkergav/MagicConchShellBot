@@ -7,8 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "testing": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./app/app.js"
+    "start": "node ./app/app.js",
+    "lint": "./node_modules/.bin/eslint",
+    "testing": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
