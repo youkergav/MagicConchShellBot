@@ -8,6 +8,10 @@ dotenv.config({ path: path.join(__dirname, ".env") }); // Load the environment v
 const defaults = {
     server: {
         port: 5500
+    },
+    db: {
+        host: "localhost",
+        port: 27017
     }
 };
 
@@ -20,5 +24,12 @@ module.exports = {
     api: {
         username: process.env.API_USERNAME,
         password: process.env.API_PASSWORD
+    },
+    db: {
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        host: process.env.DB_HOST || defaults.db.host,
+        port: process.env.DB_PORT || defaults.db.port,
+        database: process.env.DB_DATABASE
     }
 };
