@@ -1,12 +1,13 @@
 // Import required modules.
+const path = require("path");
 const dotenv = require("dotenv");
-const defaults = require("defaults");
+const defaults = require("./defaults");
 
-dotenv.config(); // Load the environment variables.
+dotenv.config({ path: path.join(__dirname, `../env/${defaults.env}.env`) }); // Load the environment variables.
 
 // Define all configurations.
 module.exports = {
-    env: process.env.NODE_ENV,
+    env: defaults.env,
     server: {
         port: parseInt(process.env.SERVER_PORT) || defaults.server.port
     },

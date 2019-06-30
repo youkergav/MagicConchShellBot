@@ -2,23 +2,13 @@
 const express = require("express");
 const path = require("path");
 const router = require("./routes/index");
-const config = require("../config/config.js");
-const mongoose = require("mongoose");
-
+const config = require("../config/config");
+const database = require("./lib/db");
 const app = express(); // Set up the express application.
 
-// Define database credentials.
-let dbUser = encodeURIComponent(config.db.username);
-let dbPass = encodeURIComponent(config.db.password);
-let dbHost = config.db.host;
-let dbPort = config.db.port;
-let dbDatabase = encodeURIComponent(config.db.database);
-let mongoUri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
-
-mongoose.connect(mongoUri, { useNewUrlParser: true }); // Connect to the database.
-mongoose.Promise = global.Promise; // Override Mongoose promise with Node JS promise.
-
 app.use(router); // Use the router location.
+
+database.connect({ username: "test" }); // Connect to the database.
 
 // Set up the views.
 app.set("views", path.join(__dirname, "views"));

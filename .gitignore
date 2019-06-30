@@ -55,11 +55,14 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+env/stage.env
+env/dev.env
+env/sandbox.env
+env/test.env
 
 # next.js build output
 .next
 
 # Hide config files
 docs/prototype/config.json
-config/.env
+env/sandbox.env
