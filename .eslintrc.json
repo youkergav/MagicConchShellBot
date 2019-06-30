@@ -19,7 +19,7 @@
         "keyword-spacing": [
             "warn", 
             {
-                "after": true,
+                "after": false,
                 "before": false
             }
         ],

@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "node ./app/app.js",
-    "lint": "./node_modules/.bin/eslint",
+    "start": "NODE_ENV=sandbox node ./app/app.js",
+    "lint": "eslint",
     "testing": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

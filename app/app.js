@@ -13,9 +13,9 @@ let dbPass = encodeURIComponent(config.db.password);
 let dbHost = config.db.host;
 let dbPort = config.db.port;
 let dbDatabase = encodeURIComponent(config.db.database);
-let dbUrl = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
+let mongoUri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
 
-mongoose.connect(dbUrl, { useNewUrlParser: true }); // Connect to the database.
+mongoose.connect(mongoUri, { useNewUrlParser: true }); // Connect to the database.
 mongoose.Promise = global.Promise; // Override Mongoose promise with Node JS promise.
 
 app.use(router); // Use the router location.
