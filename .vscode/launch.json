@@ -10,6 +10,14 @@
             "name": "Sandbox Environment",
             "program": "${file}",
             "env": { "NODE_ENV": "sandbox" }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Test Environment",
+            "program": "${file}",
+            "env": { "NODE_ENV": "test" }
         }
-    ]
+    ],
+    
 }

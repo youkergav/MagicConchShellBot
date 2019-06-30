@@ -5,10 +5,13 @@ const ApiSession = require("../models/session");
 router.get("/", function(req, res) {
     if(req.query.authCode) {
         let apiSession = new ApiSession({ authCode: req.query.authCode });
-        apiSession.save();
-    }
+        apiSession.save(function(err, result) {
+            if(err) throw err;
 
-    res.render("index");
+            res.render("index");
+            return result;
+        });
+    }
 });
 
 module.exports = router;

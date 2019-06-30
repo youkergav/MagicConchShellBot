@@ -40,8 +40,21 @@ Documentation on how to install MongoDB and set up for application.
     > use mcsb
     > db.createUser({
     > 	user: "mcsbDefault",
-    > 	pwd: "Y^nDxaQkrZshj8wz7M#MRpdM@5RFaw",
+    > 	pwd: "SECURE_PASSWORD",
     > 	roles: [{ role: "readWrite", db: "mcsb" }]
+    > })
+    >
+    > ^C
+
+### Create Test User and Database
+
+$ mongo -u ADMIN_USER -p --authenticationDatabase admin
+    
+    > use mcsbTest
+    > db.createUser({
+    > 	user: "mcsbTest",
+    > 	pwd: "SECURE_PASSWORD",
+    > 	roles: [{ role: "dbAdmin", db: "mcsbTest" }]
     > })
     >
     > ^C

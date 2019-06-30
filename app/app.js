@@ -8,7 +8,8 @@ const app = express(); // Set up the express application.
 
 app.use(router); // Use the router location.
 
-database.connect({ username: "test" }); // Connect to the database.
+database.connect(); // Connect to the database.
+database.dropDatabase();
 
 // Set up the views.
 app.set("views", path.join(__dirname, "views"));
