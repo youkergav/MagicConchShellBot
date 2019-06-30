@@ -7,8 +7,15 @@ const mongoose = require("mongoose");
 
 const app = express(); // Set up the express application.
 
-// Connect to the database.
-mongoose.connect(`mongodb://${config.db.username}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`);
+// Define database credentials.
+let dbUser = encodeURIComponent(config.db.username);
+let dbPass = encodeURIComponent(config.db.password);
+let dbHost = config.db.host;
+let dbPort = config.db.port;
+let dbDatabase = encodeURIComponent(config.db.database);
+let dbUrl = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
+
+mongoose.connect(dbUrl, { useNewUrlParser: true }); // Connect to the database.
 mongoose.Promise = global.Promise; // Override Mongoose promise with Node JS promise.
 
 app.use(router); // Use the router location.

@@ -29,7 +29,7 @@ module.exports = {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         host: process.env.DB_HOST || defaults.db.host,
-        port: process.env.DB_PORT || defaults.db.port,
+        port: parseInt(process.env.DB_PORT) || defaults.db.port,
         database: process.env.DB_DATABASE
     }
 };
