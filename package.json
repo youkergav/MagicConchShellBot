@@ -9,8 +9,52 @@
   "scripts": {
     "start": "NODE_ENV=sandbox node ./app/app.js",
     "lint": "eslint",
+    "test": "jest",
     "testing": "echo \"Error: no test specified\" && exit 1",
     "get-lines": "git ls-files | xargs cat | wc -l"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["./tests/setup.js"]
+  },
+  "eslintConfig": {
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "jest": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "quotes": ["warn", "double"],
+        "semi": ["warn", "always"],
+        "keyword-spacing": [
+            "warn", 
+            {
+                "after": false,
+                "before": false
+            }
+        ],
+        "space-before-function-paren": ["warn", "never"],
+        "switch-colon-spacing": [
+            "warn", 
+            {
+                "after": true,
+                "before": false
+            }
+        ],
+        "eqeqeq": ["warn", "smart"],
+        "handle-callback-err": "warn",
+        "no-mixed-requires": "warn"
+    }
   },
   "repository": {
     "type": "git",
@@ -36,6 +80,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.0.0",
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "jest": "^24.8.0"
   }
 }

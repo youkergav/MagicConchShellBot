@@ -6,7 +6,7 @@ router.get("/", function(req, res) {
     if(req.query.authCode) {
         let apiSession = new ApiSession({ authCode: req.query.authCode });
         apiSession.save(function(err, result) {
-            if(err) throw err;
+            if(err) return err;
 
             res.render("index");
             return result;
