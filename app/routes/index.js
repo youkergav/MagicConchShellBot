@@ -6,12 +6,13 @@ router.get("/", function(req, res) {
     if(req.query.authCode) {
         let apiSession = new ApiSession({ authCode: req.query.authCode });
         apiSession.save(function(err, result) {
-            if(err) return err;
+            if(err) throw err;
 
-            res.render("index");
             return result;
         });
     }
+
+    res.render("index"); // Render the index page.
 });
 
 module.exports = router;
