@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ApiSession = require("../models/session");
+const ApiSession = require("../models/api_session");
 
 router.get("/", function(req, res) {
     if(req.query.authCode) {

@@ -1,18 +1,31 @@
 const mongoose = require("mongoose");
 const config = require("../config/config");
 
-beforeEach(async function() {
+beforeAll(async function() {
     // Define database credentials.
     let dbUser = encodeURIComponent(config.db.username);
     let dbPass = encodeURIComponent(config.db.password);
     let dbDatabase = encodeURIComponent(config.db.database);
     let mongoUri = `mongodb://${dbUser}:${dbPass}@${config.db.host}:${config.db.port}/${dbDatabase}`;
 
-    // Connect and reset the database.
-    await mongoose.connect(mongoUri, { useNewUrlParser: true });
-    await mongoose.connection.dropDatabase();
+    // Connect to the database.
+    await mongoose.connect(mongoUri, { useNewUrlParser: true }, function(err) {
+        if(err) throw err;
+    });
 });
 
-afterEach(function() {
-    mongoose.connection.close();
+beforeEach(function() {
+    // Clear the database collections.
+    for(var coll in mongoose.connection.collections) {
+        mongoose.connection.collections[coll].remove(function(err) {
+            if(err) throw err;
+        });
+    }
+});
+
+afterAll(function() {
+    // Terminate the database connection.
+    mongoose.connection.close(function(err) {
+        if(err) throw err;
+    });
 });

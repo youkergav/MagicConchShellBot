@@ -9,7 +9,7 @@
   "scripts": {
     "start": "NODE_ENV=sandbox node ./app/app.js",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "testing": "echo \"Error: no test specified\" && exit 1",
     "get-lines": "git ls-files | xargs cat | wc -l"
   },
