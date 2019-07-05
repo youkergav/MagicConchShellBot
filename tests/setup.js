@@ -17,7 +17,7 @@ beforeAll(async function() {
 beforeEach(function() {
     // Clear the database collections.
     for(var coll in mongoose.connection.collections) {
-        mongoose.connection.collections[coll].remove(function(err) {
+        mongoose.connection.collections[coll].deleteMany(function(err) {
             if(err) throw err;
         });
     }
