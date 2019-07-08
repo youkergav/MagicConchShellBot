@@ -9,24 +9,27 @@ class Server {
 
     initDb() {
         const Database = require("./database");
-
         let database = new Database();
+
         database.connect();
     }
 
     initRoutes() {
-        const routerGeneral = require("../routes/general");
-        this.app.use(routerGeneral);
+        const Routes = require("./routes");
+        const route = new Routes(this.app);
+
+        route.setRoute("../routes/general");
 
         return true;
     }
 
     initViews() {
-        const path = require("path");
+        const Views = require("./views");
+        const view = new Views(this.express, this.app);
 
-        this.app.set("views", path.join(__dirname, "../views"));
-        this.app.set("view engine", "ejs");
-        this.app.use(this.express.static(path.join(__dirname, "../public")));
+        view.setViewsLocation("../views");
+        view.setViewEngine("ejs");
+        view.setStaticLocation("../public");
 
         return true;
     }
