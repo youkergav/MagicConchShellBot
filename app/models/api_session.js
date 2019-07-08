@@ -1,3 +1,5 @@
+"use strict";
+
 const mongoose = require("mongoose");
 
 // Create the session schema.
@@ -14,4 +16,4 @@ const schema = new mongoose.Schema({
 
 const Model = mongoose.model("session", schema); // Create the session model.
 
-module.exports = Model; // Export the session model.
+module.exports = Model;

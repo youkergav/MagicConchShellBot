@@ -1,12 +1,12 @@
-// Import required modules.
+"use strict";
+
 const path = require("path");
 const dotenv = require("dotenv");
 const defaults = require("./defaults");
 
 dotenv.config({ path: path.join(__dirname, `../env/${defaults.env}.env`) }); // Load the environment variables.
 
-// Define all configurations.
-module.exports = {
+const config = {
     env: defaults.env,
     server: {
         port: parseInt(process.env.SERVER_PORT) || defaults.server.port
@@ -23,3 +23,5 @@ module.exports = {
         database: process.env.DB_DATABASE
     }
 };
+
+module.exports = config;

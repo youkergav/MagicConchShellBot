@@ -1,3 +1,5 @@
+"use strict";
+
 class Server {
     constructor() {
         this.express = require("express");
@@ -13,8 +15,8 @@ class Server {
     }
 
     initRoutes() {
-        const router = require("../routes/index");
-        this.app.use(router);
+        const routerGeneral = require("../routes/general");
+        this.app.use(routerGeneral);
 
         return true;
     }

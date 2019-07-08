@@ -1,3 +1,5 @@
+"use strict";
+
 class Database {
     constructor() {
         this.mongoose = require("mongoose");

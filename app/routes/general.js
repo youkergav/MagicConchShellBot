@@ -1,7 +1,10 @@
+"use strict";
+
 const express = require("express");
 const router = express.Router();
 const ApiSession = require("../models/api_session");
 
+// Basic index router.
 router.get("/", function(req, res) {
     if(req.query.authCode) {
         let apiSession = new ApiSession({ authCode: req.query.authCode });
