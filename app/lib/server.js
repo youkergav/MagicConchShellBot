@@ -15,8 +15,8 @@ class Server {
     }
 
     initRoutes() {
-        const Routes = require("./routes");
-        const route = new Routes(this.app);
+        const Route = require("./route");
+        const route = new Route(this.app);
 
         route.setRoute("../routes/general");
 
@@ -24,8 +24,8 @@ class Server {
     }
 
     initViews() {
-        const Views = require("./views");
-        const view = new Views(this.express, this.app);
+        const View = require("./view");
+        const view = new View(this.express, this.app);
 
         view.setViewsLocation("../views");
         view.setViewEngine("ejs");
