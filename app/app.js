@@ -2,24 +2,13 @@
 
 // Import required modules.
 const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
-const router = require("./routes/general");
-const config = require("../config/config");
-const app = express();
+const Server = require("./lib/server.class");
 
-// Connect to the database.
-let dbUser = encodeURIComponent(config.db.username);
-let dbPass = encodeURIComponent(config.db.password);
-let dbDatabase = encodeURIComponent(config.db.database);
-let mongoUri = `mongodb://${dbUser}:${dbPass}@${config.db.host}:${config.db.port}/${dbDatabase}`;
-mongoose.connect(mongoUri, { useNewUrlParser: true });
+let server = new Server(express); // Create a server object.
 
-app.use(router); // Use the router location.
+// Initialize the server.
+server.initDb();
+server.initRoutes();
+server.initViews();
 
-// Set up the views.
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public"))); // Set the static file location.
-
-app.listen(config.server.port); // Start the application on specified port.
+server.run(); // Run the server.
