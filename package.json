@@ -10,8 +10,7 @@
     "start": "NODE_ENV=sandbox node ./app/app.js",
     "lint": "eslint",
     "test": "jest",
-    "testing": "echo \"Error: no test specified\" && exit 1",
-    "get-lines": "git ls-files | xargs cat | wc -l"
+    "docs": "jsdoc -c jsdoc.json"
   },
   "jest": {
     "testEnvironment": "node",
@@ -95,6 +94,7 @@
   "devDependencies": {
     "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "jsdoc": "^3.6.3"
   }
 }
