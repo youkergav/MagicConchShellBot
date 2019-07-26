@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: app/controllers/api_session.controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,58 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: app/controllers/api_session.controller.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module that holds the API session controller class.
+ * 
+ * @module controllers/api_session
+ */
 
+"use strict";
 
-    <h3> </h3>
+// Import api_session module.
+const ApiSessionModel = require("../models/api_session.model");
 
+/**
+ * Class to handle API session logic.
+ */
+class ApiSessionController {
+    /**
+     * Creates an instance of ApiSessionController.
+     * 
+     * @memberof ApiSessionController
+     * @param {string} authCode - The authorization code from OAUTH.
+     */
+    constructor(authCode) {
+        this.apiSessionModel = new ApiSessionModel({ authCode: authCode });
+    }
 
+    /**
+     * Creates a new session with an authorization code.
+     *
+     * @returns {boolean} Successful execution status.
+     * @memberof ApiSessionController
+     */
+    newSession() {
+        this.apiSessionModel.save(function(err) {
+            if(err) return false;
+        });
 
+        return true;
+    }
+}
 
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = ApiSessionController;</code></pre>
+        </article>
+    </section>
 
 
 

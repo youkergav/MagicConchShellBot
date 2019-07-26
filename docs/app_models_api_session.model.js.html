@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: app/models/api_session.model.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,52 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: app/models/api_session.model.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module that holds the API session schema and model.
+ * 
+ * @module models/api_session
+ * @requires mongoose
+ */
 
+"use strict";
 
-    <h3> </h3>
+const mongoose = require("mongoose");
 
+/**
+ * Mongoose model for API session data.
+ * 
+ * @class ApiSessionModel
+ * @property {string} id - The unique user ID.
+ * @property {string} authCode - The authorization code provided from OAUTH page.
+ * @property {string} accessToken - The valid code that enables access to the API.
+ * @property {string} createdAt - An ISO timestamp of when the object was created.
+ * @property {string} updatedAt - An ISO timestamp of when the object was last updated.
+ */
+const schema = new mongoose.Schema({
+    authCode: {
+        type: String,
+        required: [true, "Authorization code is required"] 
+    },
+    accessToken: {
+        type: String,
+        default: null
+    }
+}, { timestamps: true });
 
+const ApiSession = mongoose.model("session", schema);
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = ApiSession;</code></pre>
+        </article>
+    </section>
 
 
 

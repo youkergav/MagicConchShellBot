@@ -1,3 +1,11 @@
+/**
+ * The main script that is responsible for starting the
+ * application.
+ * 
+ * @module app
+ * @requires express
+ */
+
 "use strict";
 
 // Import required modules.

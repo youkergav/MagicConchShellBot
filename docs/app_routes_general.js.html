@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: app/routes/general.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,53 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: app/routes/general.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module that holds the general routes.
+ * 
+ * @module routes/general
+ * @requires express
+ */
 
+"use strict";
 
-    <h3> </h3>
+// Import required modules.
+const express = require("express");
+const router = express.Router();
 
+// Import the APISessionController class.
+const ApiSessionController = require("../controllers/api_session.controller");
+let apiSessionController;
 
-
-
-
-
-
-
-
-
+/**
+ * The index route of the project. Creates a new API session
+ * in the database.
+ * 
+ * @function getIndex
+ * @param {object} request - The express requested resource.
+ * @param {string} request.query.authCode - The authorization code to be inserted to the database.
+ * @param {object} response - The response that should be routed to.
+ * @param {object} [next] - The next middleware to use.
+ */
+router.get("/", function(request, response) {
     
+    apiSessionController = new ApiSessionController(request.query.authCode);
+    apiSessionController.newSession();
 
+    response.render("index"); // Render the index page.
+});
 
-
-
-
+module.exports = router;</code></pre>
+        </article>
+    </section>
 
 
 

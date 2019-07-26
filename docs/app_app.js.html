@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: app/app.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,39 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: app/app.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The main script that is responsible for starting the
+ * application.
+ * 
+ * @module app
+ * @requires express
+ */
 
+"use strict";
 
-    <h3> </h3>
+// Import required modules.
+const express = require("express");
+const Server = require("./lib/server.class");
 
+let server = new Server(express); // Create a server object.
 
+// Initialize the server.
+server.initDb();
+server.initRoutes();
+server.initViews();
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
+server.run(); // Run the server.</code></pre>
+        </article>
+    </section>
 
 
 
