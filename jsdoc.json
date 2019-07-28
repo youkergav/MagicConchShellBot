@@ -10,10 +10,14 @@
     "plugins": [
         "plugins/markdown"
     ],
+    "templates": {
+        "referenceTitle": "MagicConchShellBot"
+    },
     "opts": {
         "encoding": "utf8",
         "destination": "docs/",
         "recurse": true,
-        "verbose": true
+        "verbose": true,
+        "template": "node_modules/jsdoc-template"
     }
 }
