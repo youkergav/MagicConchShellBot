@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>app/lib/server.class.js - Documentation</title>
+    <title>app/routes/general.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">app/lib/server.class.js</h1>
+    <h1 class="page-title">app/routes/general.js</h1>
     
 
     
@@ -40,113 +40,41 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * The module for that holds the server class.
+ * The module that holds the general routes.
  * 
- * @module lib/server
- * @requires path
+ * @module routes/general
+ * @requires express
  */
 
 "use strict";
 
 // Import required modules.
-const path = require("path");
-const config = require("../../config/config");
+const express = require("express");
+const router = express.Router();
+
+// Import the APISessionController class.
+const ApiSessionController = require("../controllers/api_session.controller");
+let apiSessionController;
 
 /**
- * Class to manage the NodeJS and Express server.
+ * The index route of the project. Creates a new API session
+ * in the database.
+ * 
+ * @function getIndex
+ * @param {object} request - The express requested resource.
+ * @param {string} request.query.authCode - The authorization code to be inserted to the database.
+ * @param {object} response - The response that should be routed to.
+ * @param {object} [next] - The next middleware to use.
  */
-class Server {
-    /**
-     * Creates an instance of Server.
-     * 
-     * @param {Object} express - The express object to be used.
-     */
-    constructor(express) {
-        this.express = express;
-        this.app = express();
-    }
+router.get("/", function(request, response) {
+    
+    apiSessionController = new ApiSessionController(request.query.authCode);
+    apiSessionController.newSession();
 
-    /**
-     * Initialized the database connection.
-     * 
-     * @param {Object} [options] - The optional values to be overridden in the function.
-     * @param {string} [options.dbUser] - The Mongo username credential.
-     * @param {string} [options.dbPass] - The Mongo password credential.
-     * @param {string} [options.dbHost] - The Mongo hostname credential.
-     * @param {number} [options.dbPort] - The Mongo port number credential.
-     * @param {string} [options.dbDatabase] - The Mongo database name credential.
-     * @returns {boolean} Successful execution status.
-     */
-    initDb(optional={}) {
-        // Import required modules.
-        const mongoose = require("mongoose");
+    response.render("index"); // Render the index page.
+});
 
-        // Set the option values.
-        let dbUser = encodeURIComponent(optional.dbUser || config.db.username);
-        let dbPass = encodeURIComponent(optional.dbPass || config.db.password);
-        let dbHost = encodeURIComponent(optional.dbHost || config.db.host);
-        let dbPort = encodeURIComponent(optional.dbPort || config.db.port);
-        let dbDatabase = encodeURIComponent(optional.dbDatabase || config.db.database);
-
-        // Connect to the database.
-        let mongoUri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
-        mongoose.connect(mongoUri, { useNewUrlParser: true });
-
-        return true;
-    }
-
-    /**
-     * Initializes the routes to be used.
-     * 
-     * @returns {boolean} Successful execution status.
-     */
-    initRoutes() {
-        // Import required routes.
-        const generalRouter = require("../routes/general");
-
-        this.app.use(generalRouter); // Import the general router.
-
-        return true;
-    }
-
-    /**
-     * Initializes the views location, engine, and static files.
-     * 
-     * @param {Object} [options] - The optional values to be overridden in the function.
-     * @param {string} [options.viewPath] - The path where the views are stored to be used for Express.
-     * @param {string} [options.viewEngine] - The templating engine that will be used for Express.
-     * @param {string} [options.staticPath] - The path where static files are stored to be used for Express.
-     * @returns {boolean} Successful execution status.
-    */
-    initViews(optional={}) {
-        // Set the option values.
-        let viewPath = optional.viewPath || "../views";
-        let viewEngine = optional.viewEngine || "ejs";
-        let staticPath = optional.staticPath || "../public";
-
-        this.app.set("views", path.join(__dirname, viewPath)); // Set the view location.
-        this.app.set("view engine", viewEngine); // Set the view engine.
-        this.app.use(this.express.static(path.join(__dirname, staticPath))); // Set the static location.
-
-        return true;
-    }
-
-    /**
-     * Runs the server object
-     *
-     * @param {Object} [options] - The optional values to be overridden in the function.
-     * @param {number} [options.port] - The port to listen on for the web application.
-     * @returns {boolean} Successful execution status.
-     */
-    run(options={}) {
-        // Set the option values.
-        let port = options.port || config.server.port;
-
-        this.app.listen(port);
-    }
-}
-
-module.exports = Server;</code></pre>
+module.exports = router;</code></pre>
         </article>
     </section>
 
@@ -158,7 +86,7 @@ module.exports = Server;</code></pre>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Jul 28 2019 13:21:27 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Jul 28 2019 21:25:48 GMT-0700 (Pacific Daylight Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
