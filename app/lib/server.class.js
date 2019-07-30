@@ -9,7 +9,7 @@
 
 // Import required modules.
 const path = require("path");
-const config = require("../../config/config");
+const config = require("../../config/app.config");
 
 /**
  * Class to manage the NodeJS and Express server.

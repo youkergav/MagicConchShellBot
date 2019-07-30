@@ -1,4 +1,4 @@
-const ApiSession = require("../../app/models/api_session");
+const ApiSession = require("../../app/models/api_session.model");
 
 describe("new session", function() {
     test("valid session", function(done) {

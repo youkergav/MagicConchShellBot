@@ -8,14 +8,33 @@
 
 const path = require("path");
 const dotenv = require("dotenv");
-const defaults = require("./defaults");
 
-dotenv.config({ path: path.join(__dirname, `../env/${defaults.env}.env`) }); // Load the environment variables.
+const nodeEnv = process.env.NODE_ENV;
+dotenv.config({ path: path.join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environment variables.
+
+/**
+ * The object to hold default configuration data.
+ * 
+ * @const
+ * @type {Object}
+ * @property {Object} server - The server data for the NodeJS application.
+ * @property {number} server.port - The port the server will run on.
+ * @property {Object} db - The data to connect to the database.
+ * @property {string} db.host - The hostname of the database.
+ * @property {number} db.port - The port the database is listening on.
+ */
+const defaultConfig = {
+    server: {
+        port: 5500
+    },
+    db: {
+        host: "localhost",
+        port: 27017
+    }
+};
 
 /**
  * The object to hold all application configuration data.
- * 
- * Default properties are loaded in from the defaults object (config/defaults).
  * 
  * @const
  * @type {Object}
@@ -33,7 +52,7 @@ dotenv.config({ path: path.join(__dirname, `../env/${defaults.env}.env`) }); // 
  * @property {string} db.database - The name of the database to connect to.
  */
 const config = {
-    env: defaults.env,
+    env: nodeEnv,
     server: {
         port: parseInt(process.env.SERVER_PORT) || defaults.server.port
     },

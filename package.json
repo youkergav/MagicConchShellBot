@@ -2,89 +2,19 @@
   "name": "MagicConchShellBot",
   "version": "1.0.0",
   "description": "The Magic Conch Shell Bot is a lavender-colored seashell, and has a speaker inside it to help the toy and users communicate more effectively. It is operated by a pull-string on Reddit.",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "start": "NODE_ENV=sandbox node ./app/app.js",
-    "lint": "eslint",
-    "test": "jest",
-    "docs": "jsdoc app config -r -t node_modules/minami -R README.md -u docs/dev/tutorials -d docs/dev/man --verbose"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./tests/setup.js"
-    ]
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "es6": true,
-      "node": true,
-      "jest": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
-    "rules": {
-      "quotes": [
-        "warn",
-        "double"
-      ],
-      "semi": [
-        "warn",
-        "always"
-      ],
-      "keyword-spacing": [
-        "warn",
-        {
-          "after": false,
-          "before": false
-        }
-      ],
-      "space-before-function-paren": [
-        "warn",
-        "never"
-      ],
-      "switch-colon-spacing": [
-        "warn",
-        {
-          "after": true,
-          "before": false
-        }
-      ],
-      "eqeqeq": [
-        "warn",
-        "smart"
-      ],
-      "handle-callback-err": "warn",
-      "no-mixed-requires": "warn"
-    }
+    "lint": "eslint -c ./config/eslint.config.js",
+    "lint:all": "eslint -c ./config/eslint.config.js ./app",
+    "test": "jest -c ./config/jest.config.js",
+    "docs": "jsdoc -c ./config/jsdoc.config.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/youkergav/MagicConchShellBot.git"
   },
-  "keywords": [
-    "Magic",
-    "Conch",
-    "Shell",
-    "API",
-    "Reddit"
-  ],
   "author": "Gavin Youker, Nathan Perkins",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/youkergav/MagicConchShellBot/issues"
-  },
   "homepage": "https://github.com/youkergav/MagicConchShellBot#readme",
   "dependencies": {
     "ejs": "^2.6.2",
