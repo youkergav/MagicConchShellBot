@@ -64,4 +64,4 @@ env/test.env
 .next
 
 # VSCode project folder
-.vscode
+.vscode/
