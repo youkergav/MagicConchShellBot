@@ -63,6 +63,5 @@ env/test.env
 # next.js build output
 .next
 
-# Hide config files
-docs/prototype/config.json
-env/sandbox.env
+# VSCode project folder
+.vscode
