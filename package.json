@@ -4,11 +4,11 @@
   "description": "The Magic Conch Shell Bot is a lavender-colored seashell, and has a speaker inside it to help the toy and users communicate more effectively. It is operated by a pull-string on Reddit.",
   "scripts": {
     "build": "NODE_ENV=sandbox webpack --config ./config/webpack.config.js",
-    "docs": "jsdoc -c ./config/jsdoc.config.js",
-    "lint": "eslint -c ./config/eslint.config.js",
-    "lint:all": "eslint -c ./config/eslint.config.js ./app",
+    "docs": "jsdoc --configure ./config/jsdoc.config.js",
+    "lint": "eslint --config ./config/eslint.config.js",
+    "lint:all": "eslint --config ./config/eslint.config.js ./app",
     "start": "NODE_ENV=sandbox node ./app/app.js",
-    "test": "jest -c ./config/jest.config.js"
+    "test": "jest --config ./config/jest.config.js"
   },
   "repository": {
     "type": "git",
