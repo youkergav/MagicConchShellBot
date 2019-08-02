@@ -9,8 +9,8 @@
 "use strict";
 
 // Import required modules.
-const express = require("express");
-const Server = require("./lib/server.class");
+import express from "express";
+import Server from "./lib/server.class";
 
 let server = new Server(express); // Create a server object.
 

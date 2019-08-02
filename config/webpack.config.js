@@ -3,6 +3,7 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const Dotenv = require('dotenv-webpack');
+const Nodemon = require("nodemon-webpack-plugin");
 
 const config = {
     target: "node",
@@ -25,7 +26,8 @@ const config = {
     plugins: [
         new Dotenv({
             path: path.join(__dirname, `../env/${process.env.NODE_ENV}.env`)
-        })
+        }),
+        new Nodemon()
     ]
 }
 

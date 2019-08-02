@@ -90,11 +90,11 @@
 /*!********************!*\
   !*** ./app/app.js ***!
   \********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("/**\n * The main script that is responsible for starting the\n * application.\n * \n * @module app\n * @requires express\n */\n\n\n\n// Import required modules.\nconst express = __webpack_require__(/*! express */ \"express\");\nconst Server = __webpack_require__(/*! ./lib/server.class */ \"./app/lib/server.class.js\");\n\nlet server = new Server(express); // Create a server object.\n\n// Initialize the server.\nserver.initDb();\nserver.initRoutes();\nserver.initViews();\n\nserver.run(); // Run the server.\n\n//# sourceURL=webpack:///./app/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _lib_server_class__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/server.class */ \"./app/lib/server.class.js\");\n/* harmony import */ var _lib_server_class__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_lib_server_class__WEBPACK_IMPORTED_MODULE_1__);\n/**\n * The main script that is responsible for starting the\n * application.\n * \n * @module app\n * @requires express\n */\n\n\n\n// Import required modules.\n\n\n\nlet server = new _lib_server_class__WEBPACK_IMPORTED_MODULE_1___default.a(express__WEBPACK_IMPORTED_MODULE_0___default.a); // Create a server object.\n\n// Initialize the server.\nserver.initDb();\nserver.initRoutes();\nserver.initViews();\n\nserver.run(); // Run the server.\n\n//# sourceURL=webpack:///./app/app.js?");
 
 /***/ }),
 
