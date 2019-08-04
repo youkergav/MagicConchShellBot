@@ -8,11 +8,11 @@
 "use strict";
 
 // Import required modules.
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
 // Import the APISessionController class.
-const ApiSessionController = require("../controllers/api_session.controller");
+import ApiSessionController from "../controllers/api_session.controller";
 let apiSessionController;
 
 /**
@@ -26,11 +26,10 @@ let apiSessionController;
  * @param {object} [next] - The next middleware to use.
  */
 router.get("/", function(request, response) {
-    
     apiSessionController = new ApiSessionController(request.query.authCode);
     apiSessionController.newSession();
 
     response.render("index"); // Render the index page.
 });
 
-module.exports = router;
+export default router;

@@ -7,7 +7,7 @@
 
 "use strict";
 
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
 /**
  * Mongoose model for API session data.
@@ -19,7 +19,7 @@ const mongoose = require("mongoose");
  * @property {string} createdAt - An ISO timestamp of when the object was created.
  * @property {string} updatedAt - An ISO timestamp of when the object was last updated.
  */
-const schema = new mongoose.Schema({
+const schema = new Schema({
     authCode: {
         type: String,
         required: [true, "Authorization code is required"] 
@@ -30,6 +30,5 @@ const schema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const ApiSession = mongoose.model("session", schema);
-
-module.exports = ApiSession;
+const ApiSession = model("session", schema);
+export default ApiSession;

@@ -58,6 +58,7 @@ typings/
 env/stage.env
 env/dev.env
 env/sandbox.env
+env/prod.env
 env/test.env
 
 # next.js build output

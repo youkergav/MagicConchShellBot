@@ -8,8 +8,10 @@
 "use strict";
 
 // Import required modules.
-const path = require("path");
-const config = require("../../config/app.config");
+import { join } from "path";
+import mongoose from "mongoose";
+import { db, server } from "../../config/app.config";
+import generalRouter from "../routes/general";
 
 /**
  * Class to manage the NodeJS and Express server.
@@ -37,15 +39,12 @@ class Server {
      * @returns {boolean} Successful execution status.
      */
     initDb(optional={}) {
-        // Import required modules.
-        const mongoose = require("mongoose");
-
         // Set the option values.
-        let dbUser = encodeURIComponent(optional.dbUser || config.db.username);
-        let dbPass = encodeURIComponent(optional.dbPass || config.db.password);
-        let dbHost = encodeURIComponent(optional.dbHost || config.db.host);
-        let dbPort = encodeURIComponent(optional.dbPort || config.db.port);
-        let dbDatabase = encodeURIComponent(optional.dbDatabase || config.db.database);
+        let dbUser = encodeURIComponent(optional.dbUser || db.username);
+        let dbPass = encodeURIComponent(optional.dbPass || db.password);
+        let dbHost = encodeURIComponent(optional.dbHost || db.host);
+        let dbPort = encodeURIComponent(optional.dbPort || db.port);
+        let dbDatabase = encodeURIComponent(optional.dbDatabase || db.database);
 
         // Connect to the database.
         let mongoUri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
@@ -60,9 +59,6 @@ class Server {
      * @returns {boolean} Successful execution status.
      */
     initRoutes() {
-        // Import required routes.
-        const generalRouter = require("../routes/general");
-
         this.app.use(generalRouter); // Import the general router.
 
         return true;
@@ -83,9 +79,9 @@ class Server {
         let viewEngine = optional.viewEngine || "ejs";
         let staticPath = optional.staticPath || "../public";
 
-        this.app.set("views", path.join(__dirname, viewPath)); // Set the view location.
+        this.app.set("views", join(__dirname, viewPath)); // Set the view location.
         this.app.set("view engine", viewEngine); // Set the view engine.
-        this.app.use(this.express.static(path.join(__dirname, staticPath))); // Set the static location.
+        this.app.use(this.express.static(join(__dirname, staticPath))); // Set the static location.
 
         return true;
     }
@@ -99,10 +95,10 @@ class Server {
      */
     run(options={}) {
         // Set the option values.
-        let port = options.port || config.server.port;
+        let port = options.port || server.port;
 
         this.app.listen(port);
     }
 }
 
-module.exports = Server;
+export default Server;

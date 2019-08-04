@@ -7,7 +7,7 @@
 "use strict";
 
 // Import api_session module.
-const ApiSessionModel = require("../models/api_session.model");
+import ApiSessionModel from "../models/api_session.model";
 
 /**
  * Class to handle API session logic.
@@ -38,4 +38,4 @@ class ApiSessionController {
     }
 }
 
-module.exports = ApiSessionController;
+export default ApiSessionController;
