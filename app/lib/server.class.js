@@ -184,7 +184,7 @@ class Server {
      *      if(error) return false;
      * 
      *      // do something.
-     * })
+     * });
      */
     run(options, callback) {
         // Set the option values.
