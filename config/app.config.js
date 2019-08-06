@@ -6,11 +6,11 @@
  */
 "use strict";
 
-const path = require("path");
-const dotenv = require("dotenv");
+import { join } from "path";
+import { config as _config } from "dotenv";
 
 const nodeEnv = process.env.NODE_ENV;
-dotenv.config({ path: path.join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environment variables.
+_config({ path: join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environment variables.
 
 /**
  * The object to hold default configuration data.
@@ -69,4 +69,4 @@ const config = {
     }
 };
 
-module.exports = config;
+export default config;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ApiSessionModel - Documentation</title>
+    <title>config/app.config.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,289 +29,90 @@
 
 <div id="main">
     
-    <h1 class="page-title">ApiSessionModel</h1>
+    <h1 class="page-title">config/app.config.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-models_api_session.html">models/api_session</a>~</span>
-        
-        ApiSessionModel
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="ApiSessionModel"><span class="type-signature"></span>new ApiSessionModel<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Mongoose model for API session data.</p>
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The unique user ID.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>authCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The authorization code provided from OAUTH page.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>accessToken</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The valid code that enables access to the API.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>createdAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was created.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>updatedAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was last updated.</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_models_api_session.model.js.html">app/models/api_session.model.js</a>, <a href="app_models_api_session.model.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The main configuration file.
+ * @module config/config
+ * @requires path
+ * @requires dotenv
+ */
+"use strict";
+
+import { join } from "path";
+import { config as _config } from "dotenv";
+
+const nodeEnv = process.env.NODE_ENV;
+_config({ path: join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environment variables.
+
+/**
+ * The object to hold default configuration data.
+ * 
+ * @const
+ * @type {Object}
+ * @property {Object} server - The server data for the NodeJS application.
+ * @property {number} server.port - The port the server will run on.
+ * @property {Object} db - The data to connect to the database.
+ * @property {string} db.host - The hostname of the database.
+ * @property {number} db.port - The port the database is listening on.
+ */
+const defaultConfig = {
+    server: {
+        port: 5500
+    },
+    db: {
+        host: "localhost",
+        port: 27017
+    }
+};
+
+/**
+ * The object to hold all application configuration data.
+ * 
+ * @const
+ * @type {Object}
+ * @property {string} env - The environment of the application state. Set by NODE_ENV.
+ * @property {Object} [server] - The server data for the NodeJS application.
+ * @property {number} [server.port=defaults.server.port] - The port the server will run on.
+ * @property {Object} api - The credentials and data held in the API.
+ * @property {string} api.username - The username to authenticate with the API.
+ * @property {string} api.password - The password to authenticate with the API.
+ * @property {Object} db - The data to connect to the database.
+ * @property {string} db.username - The username of the database user.
+ * @property {string} db.password - The password of the database user.
+ * @property {string} [db.host=defaults.db.host] - The hostname of the database.
+ * @property {number} [db.port=defaults.db.port] - The port the database is listening on.
+ * @property {string} db.database - The name of the database to connect to.
+ */
+const config = {
+    env: nodeEnv,
+    server: {
+        port: parseInt(process.env.SERVER_PORT) || defaults.server.port
+    },
+    api: {
+        username: process.env.API_USERNAME,
+        password: process.env.API_PASSWORD
+    },
+    db: {
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        host: process.env.DB_HOST || defaults.db.host,
+        port: parseInt(process.env.DB_PORT) || defaults.db.port,
+        database: process.env.DB_DATABASE
+    }
+};
+
+export default config;</code></pre>
+        </article>
+    </section>
 
 
 

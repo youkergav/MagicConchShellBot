@@ -105,7 +105,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line23">line 23</a>
+        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -190,6 +190,16 @@
 
 
 
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>import express from "express";
+import Server from "./lib/server.class";
+
+let server = new Server(express);</code></pre>
+
+</div>
+
 </div>
     
     </div>
@@ -215,7 +225,7 @@
 
     
 
-    <h4 class="name" id="initDb"><span class="type-signature"></span>initDb<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="initDb"><span class="type-signature"></span>initDb<span class="signature">(options, callback)</span><span class="type-signature"></span></h4>
 
     
 
@@ -258,7 +268,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line39">line 39</a>
+        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -290,8 +300,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -317,21 +325,11 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">
-                <p>The optional values to be overridden in the function.</p>
+                <p>The optional values to be overridden in the function. If none pass in &quot;{}&quot;.</p>
                 
                     
 
@@ -349,6 +347,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -359,7 +359,7 @@
 
         <tr>
             
-                <td class="name"><code>dbUser</code></td>
+                <td class="name"><code>username</code></td>
             
 
             <td class="type">
@@ -383,6 +383,12 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                    config.db.username
+                
+                </td>
             
 
             <td class="description last">
@@ -395,7 +401,7 @@
 
         <tr>
             
-                <td class="name"><code>dbPass</code></td>
+                <td class="name"><code>password</code></td>
             
 
             <td class="type">
@@ -419,6 +425,12 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                    config.db.password
+                
+                </td>
             
 
             <td class="description last">
@@ -431,7 +443,7 @@
 
         <tr>
             
-                <td class="name"><code>dbHost</code></td>
+                <td class="name"><code>host</code></td>
             
 
             <td class="type">
@@ -456,6 +468,12 @@
             
 
             
+                <td class="default">
+                
+                    config.db.host
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The Mongo hostname credential.</p>
@@ -467,7 +485,7 @@
 
         <tr>
             
-                <td class="name"><code>dbPort</code></td>
+                <td class="name"><code>port</code></td>
             
 
             <td class="type">
@@ -492,6 +510,12 @@
             
 
             
+                <td class="default">
+                
+                    config.db.port
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The Mongo port number credential.</p>
@@ -503,7 +527,7 @@
 
         <tr>
             
-                <td class="name"><code>dbDatabase</code></td>
+                <td class="name"><code>database</code></td>
             
 
             <td class="type">
@@ -528,6 +552,12 @@
             
 
             
+                <td class="default">
+                
+                    config.db.database
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The Mongo database name credential.</p>
@@ -544,6 +574,32 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>getData</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>A callback to retrieve data.</p>
+                
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -560,32 +616,32 @@
 
 
 
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>boolean</code></span>
 
 
-    </dd>
-</dl>
+<div class="section-examples">
+<h5>Example</h5>
 
+    <pre class="prettyprint"><code>// Call with default params.
+server.initDb({}, (error, result) => {
+     if(error) return false;
 
-<div class="param-desc">
-    <p>Successful execution status.</p>
+     // do something
+});
+
+// Call with optional params.
+server.initDb({
+     username: "root",
+     password: "toor",
+     host: "8.8.8.8",
+     port: "12345",
+     database: "sample"
+}, (error, result) => {
+     if(error) return false;
+
+     // do something
+});</code></pre>
+
 </div>
-
-    
-</div>
-
-
 
 </div>
         
@@ -594,7 +650,7 @@
 
     
 
-    <h4 class="name" id="initRoutes"><span class="type-signature"></span>initRoutes<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="initRoutes"><span class="type-signature"></span>initRoutes<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -637,7 +693,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line62">line 62</a>
+        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -668,32 +724,14 @@
 
 
 
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>boolean</code></span>
 
 
-    </dd>
-</dl>
+<div class="section-examples">
+<h5>Example</h5>
 
+    <pre class="prettyprint"><code>server.initRoutes();</code></pre>
 
-<div class="param-desc">
-    <p>Successful execution status.</p>
 </div>
-
-    
-</div>
-
-
 
 </div>
         
@@ -702,7 +740,7 @@
 
     
 
-    <h4 class="name" id="initViews"><span class="type-signature"></span>initViews<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="initViews"><span class="type-signature"></span>initViews<span class="signature">(options, callback)</span><span class="type-signature"></span></h4>
 
     
 
@@ -745,7 +783,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line80">line 80</a>
+        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -777,8 +815,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -804,21 +840,11 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">
-                <p>The optional values to be overridden in the function.</p>
+                <p>The optional values to be overridden in the function. If none pass in &quot;{}&quot;.</p>
                 
                     
 
@@ -835,6 +861,8 @@
         <th>Attributes</th>
         
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -870,6 +898,12 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                    path.join(__dirname, "../views")
+                
+                </td>
             
 
             <td class="description last">
@@ -907,6 +941,12 @@
             
 
             
+                <td class="default">
+                
+                    "ejs"
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The templating engine that will be used for Express.</p>
@@ -943,6 +983,12 @@
             
 
             
+                <td class="default">
+                
+                    path.join(__dirname, "../public")
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The path where static files are stored to be used for Express.</p>
@@ -959,6 +1005,32 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>getData</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>A callback to retrieve data.</p>
+                
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -975,32 +1047,30 @@
 
 
 
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>boolean</code></span>
 
 
-    </dd>
-</dl>
+<div class="section-examples">
+<h5>Example</h5>
 
+    <pre class="prettyprint"><code>// Call with default params.
+server.initViews({}, (error, result) => {
+     if(error) return false;
 
-<div class="param-desc">
-    <p>Successful execution status.</p>
+     // do something
+});
+
+// Call with optional params.
+server.initViews({
+     viewPath: path.join(__dirname, "views"),
+     viewEngine: "jade",
+     staticPath: path.join(__dirname, "static")
+}, (error, result) => {
+     if(error) return false;
+
+     // do something
+});</code></pre>
+
 </div>
-
-    
-</div>
-
-
 
 </div>
         
@@ -1009,7 +1079,7 @@
 
     
 
-    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">(options, callback)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1052,7 +1122,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line100">line 100</a>
+        <a href="app_lib_server.class.js.html">app/lib/server.class.js</a>, <a href="app_lib_server.class.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -1084,8 +1154,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -1111,21 +1179,11 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">
-                <p>The optional values to be overridden in the function.</p>
+                <p>The optional values to be overridden in the function. If none pass in &quot;{}&quot;.</p>
                 
                     
 
@@ -1142,6 +1200,8 @@
         <th>Attributes</th>
         
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1178,6 +1238,12 @@
             
 
             
+                <td class="default">
+                
+                    config.server.port
+                
+                </td>
+            
 
             <td class="description last">
                 <p>The port to listen on for the web application.</p>
@@ -1194,6 +1260,32 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>getData</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>A callback to retrieve data.</p>
+                
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -1210,32 +1302,26 @@
 
 
 
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>boolean</code></span>
 
 
-    </dd>
-</dl>
+<div class="section-examples">
+<h5>Example</h5>
 
+    <pre class="prettyprint"><code>// Call with default params.
+server.run({}, (error, result) => {
+     if(error) return false;
 
-<div class="param-desc">
-    <p>Successful execution status.</p>
+     // do something.
+});
+
+// Call with optional params.
+server.run({ port: 4000 }, (error, result) => {
+     if(error) return false;
+
+     // do something.
+})</code></pre>
+
 </div>
-
-    
-</div>
-
-
 
 </div>
         
@@ -1256,7 +1342,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Jul 29 2019 21:24:38 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Aug 05 2019 17:07:43 GMT-0700 (Pacific Daylight Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
