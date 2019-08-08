@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>config/app.config.js - Documentation</title>
+    <title>app/lib/logger.class.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">config/app.config.js</h1>
+    <h1 class="page-title">app/lib/logger.class.js</h1>
     
 
     
@@ -40,81 +40,132 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * The main configuration file.
- * @module config/config
- * @requires path
- * @requires dotenv
+ * The module that holds the logger class.
+ * 
+ * @module lib/logger
+ * @requires winston
  */
+
 "use strict";
 
-import { join } from "path";
-import { config as _config } from "dotenv";
-
-const nodeEnv = process.env.NODE_ENV;
-_config({ path: join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environment variables.
+import { createLogger } from "winston";
+import winstonConfig from "../../config/winston.config";
 
 /**
- * The object to hold default configuration data.
+ * Class to manage logging.
  * 
- * @const
- * @type {Object}
- * @property {Object} server - The server data for the NodeJS application.
- * @property {number} server.port - The port the server will run on.
- * @property {Object} db - The data to connect to the database.
- * @property {string} db.host - The hostname of the database.
- * @property {number} db.port - The port the database is listening on.
+ * Each log level method gets less strict as the levels increase.
  */
-const defaults = {
-    server: {
-        port: 5500
-    },
-    db: {
-        host: "localhost",
-        port: 27017
+class Logger {
+    /**
+     * Creates an instance of Logger.
+     */
+    constructor() {
+        this.winston = createLogger(winstonConfig);
     }
-};
 
-/**
- * The object to hold all application configuration data.
- * 
- * @const
- * @type {Object}
- * @property {string} env - The environment of the application state. Set by NODE_ENV.
- * @property {Object} [server] - The server data for the NodeJS application.
- * @property {number} [server.port=defaults.server.port] - The port the server will run on.
- * @property {Object} api - The credentials and data held in the API.
- * @property {string} api.username - The username to authenticate with the API.
- * @property {string} api.password - The password to authenticate with the API.
- * @property {Object} db - The data to connect to the database.
- * @property {string} db.username - The username of the database user.
- * @property {string} db.password - The password of the database user.
- * @property {string} [db.host=defaults.db.host] - The hostname of the database.
- * @property {number} [db.port=defaults.db.port] - The port the database is listening on.
- * @property {string} db.database - The name of the database to connect to.
- */
-const config = {
-    env: nodeEnv,
-    log: {
-        consoleLevel: process.env.LOG_CONSOLE_LEVEL || nodeEnv === "sandbox" ? "verbose" : "debug",
-        fileLevel: process.env.LOG_FILE_LEVEL || nodeEnv === "sandbox" ? "debug" : "verbose",
-    },
-    server: {
-        port: parseInt(process.env.SERVER_PORT) || defaults.server.port
-    },
-    api: {
-        username: process.env.API_USERNAME,
-        password: process.env.API_PASSWORD
-    },
-    db: {
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        host: process.env.DB_HOST || defaults.db.host,
-        port: parseInt(process.env.DB_PORT) || defaults.db.port,
-        database: process.env.DB_DATABASE
+    /**
+     * Logs out error messages.
+     *
+     * @param {string} namespace - The namespace to give to the error log.
+     * @param {string} content - The message or content to give the error log.
+     * 
+     * @example
+     * logger.error("server.start.false", "the express server failed to start");
+     */
+    error(namespace, content) {
+        if(content) {
+            this.winston.error({ namespace: namespace, content: content });
+        } else {
+            this.winston.error({ namespace: namespace });
+        }
     }
-};
 
-export default config;</code></pre>
+    /**
+     * Logs out warning messages.
+     *
+     * @param {string} namespace - The namespace to give to the warning log.
+     * @param {string} content - The message or content to give the warning log.
+     * 
+     * @example
+     * logger.warn("server.ssl.obsolete", "the SSL version is obsolete");
+     */
+    warn(namespace, content) {
+        if(content) {
+            this.winston.warn({ namespace: namespace, content: content });
+        } else {
+            this.winston.warn({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out informational messages.
+     *
+     * @param {string} namespace - The namespace to give to the info log.
+     * @param {string} [content] - The message or content to give the info log.
+     * 
+     * @example
+     * // Without a content parameter.
+     * logger.info("server.start.true");
+     * 
+     * // With a content parameter.
+     * logger.info("server.start.true", "the server is running");
+     */
+    info(namespace, content=false) {
+        if(content) {
+            this.winston.info({ namespace: namespace, content: content });
+        } else {
+            this.winston.info({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out verbose messages.
+     *
+     * @param {string} namespace - The namespace to give to the verbose log.
+     * @param {string} [content] - The message or content to give the verbose log.
+     * 
+     * @example
+     * // Without a content parameter.
+     * logger.info("server.express.views.init.true");
+     * 
+     * // With a content parameter.
+     * logger.info("server.express.views.init.true", "express views initialized");
+     */
+    verbose(namespace, content=false) {
+        if(content) {
+            this.winston.verbose({ namespace: namespace, content: content });
+        } else {
+            this.winston.verbose({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out debugging messages.
+     *
+     * @param {string} content - The content to log debugging data.
+     * 
+     * @example
+     * logger.verbose(result.Promise);
+     */
+    debug(content) {
+        this.winston.debug({ content: content });
+    }
+
+    /**
+     * Logs out silly messages.
+     *
+     * @param {string} message - A silly message to output.
+     * 
+     * @example
+     * logger.silly("Hello, World!");
+     */
+    silly(message) {
+        this.winston.silly(message);
+    }
+}
+
+export default Logger;</code></pre>
         </article>
     </section>
 
@@ -126,7 +177,7 @@ export default config;</code></pre>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Aug 07 2019 22:08:40 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Aug 07 2019 22:30:55 GMT-0700 (Pacific Daylight Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

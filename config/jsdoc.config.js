@@ -15,11 +15,11 @@ const config = {
     ],
     opts: {
         encoding: "utf8",
-        destination: path.join(__dirname, "../docs/dev/man"),
+        destination: path.join(__dirname, "../docs/"),
         readme: path.join(__dirname, "../README.md"),
         recurse: true,
         template: path.join(__dirname, "../node_modules/minami"),
-        tutorials: path.join(__dirname, "../docs/dev/tutorials"),
+        tutorials: path.join(__dirname, "../docs/src/tutorials"),
         verbose: true
     }
 }
