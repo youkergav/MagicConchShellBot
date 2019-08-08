@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ApiSessionModel - Documentation</title>
+    <title>app/lib/logger.class.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,289 +29,145 @@
 
 <div id="main">
     
-    <h1 class="page-title">ApiSessionModel</h1>
+    <h1 class="page-title">app/lib/logger.class.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-models_api_session.html">models/api_session</a>~</span>
-        
-        ApiSessionModel
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="ApiSessionModel"><span class="type-signature"></span>new ApiSessionModel<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Mongoose model for API session data.</p>
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The unique user ID.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>authCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The authorization code provided from OAUTH page.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>accessToken</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The valid code that enables access to the API.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>createdAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was created.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>updatedAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was last updated.</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_models_api_session.model.js.html">app/models/api_session.model.js</a>, <a href="app_models_api_session.model.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module that holds the logger class.
+ * 
+ * @module lib/logger
+ * @requires winston
+ */
+
+"use strict";
+
+import { createLogger } from "winston";
+import winstonConfig from "../../config/winston.config";
+
+/**
+ * Class to manage logging.
+ * 
+ * Each log level method gets less strict as the levels increase.
+ */
+class Logger {
+    /**
+     * Creates an instance of Logger.
+     */
+    constructor() {
+        this.winston = createLogger(winstonConfig);
+    }
+
+    /**
+     * Logs out error messages.
+     *
+     * @param {string} namespace - The namespace to give to the error log.
+     * @param {string} content - The message or content to give the error log.
+     * 
+     * @example
+     * logger.error("server.start.false", "the express server failed to start");
+     */
+    error(namespace, content) {
+        if(content) {
+            this.winston.error({ namespace: namespace, content: content });
+        } else {
+            this.winston.error({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out warning messages.
+     *
+     * @param {string} namespace - The namespace to give to the warning log.
+     * @param {string} content - The message or content to give the warning log.
+     * 
+     * @example
+     * logger.warn("server.ssl.obsolete", "the SSL version is obsolete");
+     */
+    warn(namespace, content) {
+        if(content) {
+            this.winston.warn({ namespace: namespace, content: content });
+        } else {
+            this.winston.warn({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out informational messages.
+     *
+     * @param {string} namespace - The namespace to give to the info log.
+     * @param {string} [content] - The message or content to give the info log.
+     * 
+     * @example
+     * // Without a content parameter.
+     * logger.info("server.start.true");
+     * 
+     * // With a content parameter.
+     * logger.info("server.start.true", "the server is running");
+     */
+    info(namespace, content=false) {
+        if(content) {
+            this.winston.info({ namespace: namespace, content: content });
+        } else {
+            this.winston.info({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out verbose messages.
+     *
+     * @param {string} namespace - The namespace to give to the verbose log.
+     * @param {string} [content] - The message or content to give the verbose log.
+     * 
+     * @example
+     * // Without a content parameter.
+     * logger.info("server.express.views.init.true");
+     * 
+     * // With a content parameter.
+     * logger.info("server.express.views.init.true", "express views initialized");
+     */
+    verbose(namespace, content=false) {
+        if(content) {
+            this.winston.verbose({ namespace: namespace, content: content });
+        } else {
+            this.winston.verbose({ namespace: namespace });
+        }
+    }
+
+    /**
+     * Logs out debugging messages.
+     *
+     * @param {string} content - The content to log debugging data.
+     * 
+     * @example
+     * logger.verbose(result.Promise);
+     */
+    debug(content) {
+        this.winston.debug({ content: content });
+    }
+
+    /**
+     * Logs out silly messages.
+     *
+     * @param {string} message - A silly message to output.
+     * 
+     * @example
+     * logger.silly("Hello, World!");
+     */
+    silly(message) {
+        this.winston.silly(message);
+    }
+}
+
+export default Logger;</code></pre>
+        </article>
+    </section>
 
 
 

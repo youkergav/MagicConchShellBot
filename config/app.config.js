@@ -23,7 +23,7 @@ _config({ path: join(__dirname, `../env/${nodeEnv}.env`) }); // Load the environ
  * @property {string} db.host - The hostname of the database.
  * @property {number} db.port - The port the database is listening on.
  */
-const defaultConfig = {
+const defaults = {
     server: {
         port: 5500
     },
@@ -53,6 +53,10 @@ const defaultConfig = {
  */
 const config = {
     env: nodeEnv,
+    log: {
+        consoleLevel: process.env.LOG_CONSOLE_LEVEL || nodeEnv === "sandbox" ? "verbose" : "debug",
+        fileLevel: process.env.LOG_FILE_LEVEL || nodeEnv === "sandbox" ? "debug" : "verbose",
+    },
     server: {
         port: parseInt(process.env.SERVER_PORT) || defaults.server.port
     },

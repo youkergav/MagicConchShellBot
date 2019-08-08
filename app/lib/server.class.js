@@ -1,8 +1,10 @@
 /**
- * The module for that holds the server class.
+ * The module that holds the server class.
  * 
  * @module lib/server
  * @requires path
+ * @requires fs
+ * @requires mongoose
  */
 
 "use strict";
@@ -91,7 +93,7 @@ class Server {
                 return false;
             }
 
-            callback(null, result);
+            callback(null, result.db);
             return true;
         });
     }
@@ -202,7 +204,7 @@ class Server {
             return false;
         });
 
-        callback(null, { port: port });
+        callback(null, this.app);
     }
 }
 

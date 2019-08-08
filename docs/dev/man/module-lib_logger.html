@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ApiSessionModel - Documentation</title>
+    <title>lib/logger - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">ApiSessionModel</h1>
+    <h1 class="page-title">lib/logger</h1>
     
 
     
@@ -41,11 +41,8 @@
 
 <header>
     
-        <h2>
-            <span class="ancestors"><a href="module-models_api_session.html">models/api_session</a>~</span>
         
-        ApiSessionModel
-        </h2>
+            
         
     
 </header>
@@ -54,174 +51,15 @@
     <div class="container-overview">
     
         
+            <div class="description"><p>The module that holds the logger class.</p></div>
+        
+
+        
+            
 <div class="section-method">
 
-    
-
-    <h4 class="name" id="ApiSessionModel"><span class="type-signature"></span>new ApiSessionModel<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
-
-<div class="description">
-    <p>Mongoose model for API session data.</p>
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The unique user ID.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>authCode</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The authorization code provided from OAUTH page.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>accessToken</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The valid code that enables access to the API.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>createdAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was created.</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>updatedAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An ISO timestamp of when the object was last updated.</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
 
 
 
@@ -255,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_models_api_session.model.js.html">app/models/api_session.model.js</a>, <a href="app_models_api_session.model.js.html#line12">line 12</a>
+        <a href="app_lib_logger.class.js.html">app/lib/logger.class.js</a>, <a href="app_lib_logger.class.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -289,13 +127,27 @@
 
 
 </div>
+        
     
     </div>
 
     
 
     
+        <h3 class="subsection-title">Requires</h3>
 
+        <ul>
+            <li>module:winston</li>
+        </ul>
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-lib_logger-Logger.html">Logger</a></dt>
+            <dd></dd>
+        </dl>
     
 
      
