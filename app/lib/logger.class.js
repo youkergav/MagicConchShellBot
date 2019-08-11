@@ -9,6 +9,8 @@
 
 import { createLogger } from "winston";
 import winstonConfig from "../../config/winston.config";
+import Privacy from "./privacy.class";
+import Blacklist from "./blacklist.class";
 
 /**
  * Class to manage logging.
@@ -19,8 +21,10 @@ class Logger {
     /**
      * Creates an instance of Logger.
      */
-    constructor() {
+    constructor(blacklist=[]) {
+        this.blacklist = new Blacklist(blacklist);
         this.winston = createLogger(winstonConfig);
+        this.privacy = new Privacy();
     }
 
     /**
@@ -32,12 +36,8 @@ class Logger {
      * @example
      * logger.error("server.start.false", "the express server failed to start");
      */
-    error(namespace, content) {
-        if(content) {
-            this.winston.error({ namespace: namespace, content: content });
-        } else {
-            this.winston.error({ namespace: namespace });
-        }
+    error(namespace, content, blacklist=[]) {
+        this.winston.error({ namespace: namespace, content: content });
     }
 
     /**
@@ -49,40 +49,28 @@ class Logger {
      * @example
      * logger.warn("server.ssl.obsolete", "the SSL version is obsolete");
      */
-    warn(namespace, content) {
-        if(content) {
-            this.winston.warn({ namespace: namespace, content: content });
-        } else {
-            this.winston.warn({ namespace: namespace });
-        }
+    warn(namespace, content, blacklist=[]) {
+        this.winston.warn({ namespace: namespace, content: content });
     }
 
     /**
      * Logs out informational messages.
      *
      * @param {string} namespace - The namespace to give to the info log.
-     * @param {string} [content] - The message or content to give the info log.
+     * @param {string} content - The message or content to give the info log.
      * 
      * @example
-     * // Without a content parameter.
-     * logger.info("server.start.true");
-     * 
-     * // With a content parameter.
      * logger.info("server.start.true", "the server is running");
      */
-    info(namespace, content=false) {
-        if(content) {
-            this.winston.info({ namespace: namespace, content: content });
-        } else {
-            this.winston.info({ namespace: namespace });
-        }
+    info(namespace, content) {
+        this.winston.info({ namespace: namespace, content: content });
     }
 
     /**
      * Logs out verbose messages.
      *
      * @param {string} namespace - The namespace to give to the verbose log.
-     * @param {string} [content] - The message or content to give the verbose log.
+     * @param {string} content - The message or content to give the verbose log.
      * 
      * @example
      * // Without a content parameter.
@@ -91,12 +79,8 @@ class Logger {
      * // With a content parameter.
      * logger.info("server.express.views.init.true", "express views initialized");
      */
-    verbose(namespace, content=false) {
-        if(content) {
-            this.winston.verbose({ namespace: namespace, content: content });
-        } else {
-            this.winston.verbose({ namespace: namespace });
-        }
+    verbose(namespace, content, blacklist=[]) {
+        this.winston.verbose({ namespace: namespace, content: this.privacy.redact(content, blacklist) });
     }
 
     /**
@@ -107,8 +91,8 @@ class Logger {
      * @example
      * logger.verbose(result.Promise);
      */
-    debug(content) {
-        this.winston.debug({ content: content });
+    debug(content, blackitems=[]) {
+        this.winston.debug(this.privacy.redact(content, this.blacklist.tempBlacklist(blackitems)));
     }
 
     /**
@@ -119,8 +103,8 @@ class Logger {
      * @example
      * logger.silly("Hello, World!");
      */
-    silly(message) {
-        this.winston.silly(message);
+    silly(message, blacklist=[]) {
+        this.winston.silly(this.privacy.redact(message, blacklist));
     }
 }
 

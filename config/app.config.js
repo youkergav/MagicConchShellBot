@@ -52,7 +52,13 @@ const defaults = {
  * @property {string} db.database - The name of the database to connect to.
  */
 const config = {
-    env: nodeEnv,
+    node: {
+        env: nodeEnv,
+        blacklist: [
+            /.*password.*/,
+            /.*ssn.*/
+        ]
+    },
     log: {
         consoleLevel: process.env.LOG_CONSOLE_LEVEL || nodeEnv === "sandbox" ? "verbose" : "debug",
         fileLevel: process.env.LOG_FILE_LEVEL || nodeEnv === "sandbox" ? "debug" : "verbose",

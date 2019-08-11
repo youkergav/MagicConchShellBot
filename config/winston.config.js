@@ -7,14 +7,13 @@ import config from "./app.config";
 
 // Setup logging config.
 const winston = {
-    level: config.log.consoleLevel,
     format: format.combine(
         format.timestamp(),
         format.json()
     ),
     transports: [
         new transports.Console({
-            level: config.log.fileLevel,
+            level: config.log.consoleLevel,
             format: format.combine(
                 format.colorize(),
                 format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -22,6 +21,7 @@ const winston = {
             )
         }),
         new transports.DailyRotateFile({
+            level: config.log.fileLevel,
             filename: join(__dirname, "../logs/%DATE%.log"),
             datePattern: "YYYY-MM-DD",
             zippedArchive: true,

@@ -10,11 +10,12 @@
 
 // Import required modules.
 import express from "express";
+import config from "../config/app.config";
 import Server from "./lib/server.class";
 import Logger from "./lib/logger.class";
 
 let server = new Server(express); // Create a server object.
-let logger = new Logger;
+let logger = new Logger(config.node.blacklist);
 
 (async () => {
     // Initialize the server.
@@ -22,14 +23,14 @@ let logger = new Logger;
         return new Promise((resolve) => {
             server.initDb({}, (error, result) => {
                 if(error) {
-                    logger.error("db.init.false", "the mongo database failed to initialize");
+                    logger.error("db.start.fail", "the mongo database failed to initialize");
                     logger.debug(error);
 
                     return false;
                 }
         
-                logger.info("db.init.true", "the mongo database is online");
-                logger.debug(result.s);
+                logger.info("db.start.success", "the mongo database is online");
+                // logger.debug(result.s);
     
                 resolve(result);
             });
@@ -38,12 +39,12 @@ let logger = new Logger;
         
             server.initViews({}, (error, result) => {
                 if(error) {
-                    logger.error("server.express.views.init.false", "the express views failed to initialize");
+                    logger.error("server.express.views.init.fail", "the express views failed to initialize");
 
                     return false;
                 };
 
-                logger.verbose("server.express.views.init.true", "express views initialized");
+                logger.verbose("server.express.views.init.success", "express views initialized");
             });
         });
     })();
@@ -51,13 +52,22 @@ let logger = new Logger;
     // Run the server.
     server.run({}, (error, result) => {
         if(error) {
-            logger.error("server.start.false", "the express server failed to start");
+            logger.error("server.start.fail", "the express server failed to start");
             logger.debug(error);
             
             return false;
         };
     
-        logger.info("server.start.true", "the express server is online");
-        logger.debug(result.settings);
+        logger.info("server.start.success", "the express server is online");
+        logger.debug({
+            user: { 
+                username: "youkergav", 
+                password: "testing",
+                ssn: "1234567890",
+                address: "ur moms house",
+                test: "TEST"
+            }, 
+        });
+        // logger.debug(result.settings);
     });
 })();

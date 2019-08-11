@@ -93,7 +93,7 @@ class Server {
                 return false;
             }
 
-            callback(null, result.db);
+            callback(null, result);
             return true;
         });
     }
