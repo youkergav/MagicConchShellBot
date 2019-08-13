@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>app - Documentation</title>
+    <title>Blacklist - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">app</h1>
+    <h1 class="page-title">Blacklist</h1>
     
 
     
@@ -41,8 +41,13 @@
 
 <header>
     
+        <h2>
+            <span class="ancestors"><a href="module-lib_blacklist.html">lib/blacklist</a>~</span>
         
-            
+        Blacklist
+        </h2>
+        
+            <div class="class-description"><p>Class to hold blacklist information.</p></div>
         
     
 </header>
@@ -51,15 +56,21 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The main script that is responsible for starting the
-application.</p></div>
-        
-
-        
-            
 <div class="section-method">
 
+    
+    <h2>Constructor</h2>
+    
 
+    <h4 class="name" id="Blacklist"><span class="type-signature"></span>new Blacklist<span class="signature">(blacklist<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Creates an instance of Blacklist.</p>
+</div>
 
 
 
@@ -94,7 +105,172 @@ application.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_app.js.html">app/app.js</a>, <a href="app_app.js.html#line1">line 1</a>
+        <a href="app_lib_blacklist.class.js.html">app/lib/blacklist.class.js</a>, <a href="app_lib_blacklist.class.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>blacklist</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">
+                <p>The native blacklist to pass in. The array elements must be regular expressions.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="getBlacklist"><span class="type-signature"></span>getBlacklist<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Gets the current blacklist.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_lib_blacklist.class.js.html">app/lib/blacklist.class.js</a>, <a href="app_lib_blacklist.class.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -125,31 +301,187 @@ application.</p></div>
 
 
 
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Array</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
 
 
 </div>
         
-    
-    </div>
+            
+<div class="section-method">
 
     
 
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:express</li>
-        </ul>
-    
+    <h4 class="name" id="tempBlacklist"><span class="type-signature"></span>tempBlacklist<span class="signature">(tempBlackitems)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
-     
+
+
+<div class="description">
+    <p>Generated a blacklist comprised of the native blacklist and temporary blacklisted items.</p>
+</div>
+
+
+
+
+
+<dl class="details">
 
     
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_lib_blacklist.class.js.html">app/lib/blacklist.class.js</a>, <a href="app_lib_blacklist.class.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tempBlackitems</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The additional regular expressions to add the the blacklist.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
     
 
     

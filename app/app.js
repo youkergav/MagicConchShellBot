@@ -59,15 +59,6 @@ let logger = new Logger(config.node.blacklist);
         };
     
         logger.info("server.start.success", "the express server is online");
-        logger.debug({
-            user: { 
-                username: "youkergav", 
-                password: "testing",
-                ssn: "1234567890",
-                address: "ur moms house",
-                test: "TEST"
-            }, 
-        });
         // logger.debug(result.settings);
     });
 })();

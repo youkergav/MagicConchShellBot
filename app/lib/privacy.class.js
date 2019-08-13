@@ -1,12 +1,13 @@
+/**
+ * The module to hold the privacy class.
+ * 
+ * @module lib/privacy
+ */
+
 "use strict";
 
 /**
  * Class to handle redacting private information found in JavaScript objects.
- * 
- * NOTE: Is is important that you run _loadBlacklist() before checking against
- * the blacklist and to run _cleanBlaclist() after checking against the blacklist.
- * If you do not load or clean the blacklist, the blacklist attributes will become
- * polluted and unreliable.
  */
 class Privacy {
     /**

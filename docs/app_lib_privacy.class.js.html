@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>app - Documentation</title>
+    <title>app/lib/privacy.class.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,135 +29,97 @@
 
 <div id="main">
     
-    <h1 class="page-title">app</h1>
+    <h1 class="page-title">app/lib/privacy.class.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module to hold the privacy class.
+ * 
+ * @module lib/privacy
+ */
+
+"use strict";
+
+/**
+ * Class to handle redacting private information found in JavaScript objects.
+ */
+class Privacy {
+    /**
+     * Creates an instance of Privacy.
+     * @param {Array} [blackitems] - An array of regex patterns to be added to the default blacklist.
+     * @memberof Privacy
+     */
+    constructor(blackitems=[]) {
+        /** The default blacklist to be used. @private */
+        this._defaultBlacklist = blackitems;
+
+        /** The temporary blacklist to be used one time @private*/
+        this._tempBlacklist = [];
+    }
+
+    /**
+     * Check if the value is in object.
+     */
+    _isObject(val) {
+        return val != null &amp;&amp; val.constructor.name === "Object"
+    }
+
+    /**
+     * Checks if the key is found in any blacklists.
+     *
+     * @param {string} key - The key value to check against.
+     * @returns {boolean}
+     */
+    _isPrivate(key, blacklist) {
+        for(var b of blacklist) {
+            if(b.test(key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Recursively finds blacklisted items in a JavaScript object and replaces them 
+     * with censored data.
+     * 
+     * @param {Object} obj - The object to be censored and cleaned.
+     * @returns {Object}
+     */
+    redact(obj, blacklist) {
+        if(!this._isObject(obj)) return obj; // Ignore non-object data structures.
+
+        const result = Object.assign({}, obj); // Copy the object to modify.
+
+        for(var key of Object.keys(result)) {
+            const val = result[key];
+
+            // Check for nested objects and perform recursion.
+            if(this._isObject(val)) {
+                result[key] = this.redact(val, blacklist);
+            }
             
-        
-    
-</header>
+            // Check if key is private and mask.
+            if(this._isPrivate(key, blacklist)) {
+                result[key] = "*****";
+            }
+        }
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><p>The main script that is responsible for starting the
-application.</p></div>
-        
+        return result;
+    }
+}
 
-        
-            
-<div class="section-method">
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_app.js.html">app/app.js</a>, <a href="app_app.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-    </div>
-
-    
-
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:express</li>
-        </ul>
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default Privacy;</code></pre>
+        </article>
+    </section>
 
 
 
