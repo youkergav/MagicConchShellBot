@@ -11,19 +11,6 @@
  */
 class Privacy {
     /**
-     * Creates an instance of Privacy.
-     * @param {Array} [blackitems] - An array of regex patterns to be added to the default blacklist.
-     * @memberof Privacy
-     */
-    constructor(blackitems=[]) {
-        /** The default blacklist to be used. @private */
-        this._defaultBlacklist = blackitems;
-
-        /** The temporary blacklist to be used one time @private*/
-        this._tempBlacklist = [];
-    }
-
-    /**
      * Check if the value is in object.
      */
     _isObject(val) {
@@ -51,7 +38,12 @@ class Privacy {
      * with censored data.
      * 
      * @param {Object} obj - The object to be censored and cleaned.
+     * @param {Array} blacklist - The blacklist to be used for redacting.
      * @returns {Object}
+     *
+     * @example
+     * let blacklist = [/.*password*./, /.*ssn*./];
+     * let result = privacy.redact({username: "root", password: "toor"}, blacklist);
      */
     redact(obj, blacklist) {
         if(!this._isObject(obj)) return obj; // Ignore non-object data structures.

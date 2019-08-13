@@ -13,6 +13,12 @@ class Blacklist{
     /**
      * Creates an instance of Blacklist.
      * @param {Array} [blacklist] - The native blacklist to pass in. The array elements must be regular expressions.
+     * 
+     * @example
+     * let blacklist = new Blacklist([
+     *      /password/,
+     *      /ssn/
+     * ]);
      */
     constructor(blacklist=[]) {
         this.blacklist = blacklist;
@@ -23,6 +29,12 @@ class Blacklist{
      *
      * @param {Array} tempBlackitems - The additional regular expressions to add the the blacklist.
      * @returns {boolean}
+     * 
+     * @example
+     * let result = blacklist.tempBlacklist([
+     *      /address/,
+     *      /creditCard/
+     * ]);
      */
     tempBlacklist(tempBlackitems) {
         if(tempBlackitems) {
@@ -36,6 +48,9 @@ class Blacklist{
      * Gets the current blacklist.
      *
      * @returns {Array}
+     * 
+     * @example
+     * let result = blacklist.getBlacklist();
      */
     getBlacklist() {
         return this.blacklist;

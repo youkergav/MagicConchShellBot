@@ -38,7 +38,9 @@ const defaults = {
  * 
  * @const
  * @type {Object}
- * @property {string} env - The environment of the application state. Set by NODE_ENV.
+ * @property {Object} node - The application metadata.
+ * @property {string} node.env - The environment of the application state. Set by NODE_ENV.
+ * @property {Array} node.blacklist - The blacklist that will used to mask sensitive objects. Array elements must be regular expressions.
  * @property {Object} [server] - The server data for the NodeJS application.
  * @property {number} [server.port=defaults.server.port] - The port the server will run on.
  * @property {Object} api - The credentials and data held in the API.
